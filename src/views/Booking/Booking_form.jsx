@@ -21,6 +21,7 @@ import { useNavigate } from "react-router";
 import * as Yup from "yup";
 import TextInput from "../../component/TextInput";
 import apiCall from "../../helper/Axios";
+import { loadStripe } from "@stripe/stripe-js";
 
 const BookingValidations = Yup.object().shape({
   check_in_date: Yup.string().required("Check In Date is Required"),
@@ -33,7 +34,7 @@ export default function Booking() {
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(BookingValidations),
     defaultValues: {
-      chek_in_date: "",
+      check_in_date: "",
       check_out_date: "",
       hotel_id: "",
     },
@@ -44,7 +45,9 @@ export default function Booking() {
       const result = await apiCall.post("booking/book-hotel", {
         ...data,
       });
-      console.log(result);
+      console.log(result?.data?.response?.session);
+      const stripe = await loadStripe(`${process.env.REACT_APP_PUBLIC_KEY}`);
+      stripe.redirectToCheckout({ sessionId: result?.data?.response?.session });
       //   if (result?.status === 200) {
       //     toast.success(result?.data?.message);
       //     console.log(result?.data?.response?.role);

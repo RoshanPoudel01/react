@@ -15,11 +15,15 @@ import {
     VisuallyHidden,
     List,
     ListItem,
-  } from '@chakra-ui/react';
+} from '@chakra-ui/react';
+
+  
+import { useEffect } from 'react';
   import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
   import { MdLocalShipping } from 'react-icons/md';
   
-  export default function Simple() {
+export default function Simple() {
+ 
     return (
       <Container maxW={'7xl'}>
         <SimpleGrid

@@ -21,6 +21,7 @@ import { useNavigate } from "react-router";
 import * as Yup from "yup";
 import TextInput from "../../component/TextInput";
 import apiCall from "../../helper/Axios";
+import { useEffect } from "react";
 
 const SigninSchema = Yup.object().shape({
   password: Yup.string()
@@ -32,7 +33,16 @@ const SigninSchema = Yup.object().shape({
 
 export default function Signin() {
   const navigate = useNavigate();
-
+  useEffect(() => {
+    tokenchecker();
+  }, []);
+  const tokenchecker = async () => {
+    const token = await localStorage.getItem("usertoken");
+    const userrole = await localStorage.getItem("userrole");
+    if (token && userrole) {
+      navigateUser(userrole);
+    }
+  };
   const { control, handleSubmit } = useForm({
     resolver: yupResolver(SigninSchema),
     defaultValues: {
@@ -50,16 +60,11 @@ export default function Signin() {
       console.log(result);
       if (result?.status === 200) {
         toast.success(result?.data?.message);
-        console.log(result?.data?.response?.role);
+        console.log(result?.data?.token);
+        await localStorage.setItem("usertoken", result?.data?.token);
+        await localStorage.setItem("userrole", result?.data?.response?.role);
         // console.log(Response.role);
-        if (result?.data?.response?.role === "Admin") {
-          navigate(`/admin`);
-        } else {
-          navigate(`/`);
-        }
-        //above console lai local storage
-        // user role check
-        // admin and normal redirect
+        navigateUser(result?.data?.response?.role);
       }
       console.log(data);
       // toast.error(re);
@@ -69,7 +74,14 @@ export default function Signin() {
       toast.error(e?.response?.data?.message);
     }
   };
-
+  const navigateUser = (data) => {
+    console.log(data);
+    if (data === "Admin") {
+      navigate(`/admin`);
+    } else {
+      navigate(`/`);
+    }
+  };
   return (
     <Flex
       minH={"100vh"}
