@@ -28,7 +28,7 @@ const BookingValidations = Yup.object().shape({
   check_out_date: Yup.string().required("Check Out Date is Required"),
 });
 
-export default function Booking() {
+export default function Booking({id}) {
   const navigate = useNavigate();
 
   const { control, handleSubmit } = useForm({
@@ -36,14 +36,13 @@ export default function Booking() {
     defaultValues: {
       check_in_date: "",
       check_out_date: "",
-      hotel_id: "",
     },
   });
 
   const submitForm = async (data) => {
     try {
       const result = await apiCall.post("booking/book-hotel", {
-        ...data,
+        ...data,hotel_id:id,
       });
       console.log(result?.data?.response?.session);
       const stripe = await loadStripe(`${process.env.REACT_APP_PUBLIC_KEY}`);
@@ -72,13 +71,11 @@ export default function Booking() {
 
   return (
     <Flex
-      minH={"100vh"}
-      align={"center"}
-      justify={"center"}
+    
       bg={useColorModeValue("gray.50", "gray.800")}
     >
       <Toaster position="top-right" reverseOrder={false} />
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+      <Stack spacing={8} mx={"auto"} maxW={"md"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Book Hotel</Heading>
           {/* <Text fontSize={'lg'} color={'gray.600'}>
@@ -101,10 +98,7 @@ export default function Booking() {
                 <FormLabel>Check Out Date</FormLabel>
                 <TextInput name="check_out_date" control={control} />
               </FormControl>
-              <FormControl id="hotel_id" isRequired>
-                <FormLabel>Hotel Id</FormLabel>
-                <TextInput name="hotel_id" control={control} />
-              </FormControl>
+             
               <Stack spacing={10}>
                 <Button
                   bg={"blue.400"}

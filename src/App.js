@@ -7,16 +7,12 @@ import Nav from './views/Nav';
 
 
 function App() {
-  useEffect(() => {
- console.log("heyy")
-    func()   
-  }, [])
-
+ 
   const func=async()=>{
     console.log("Hekko")
 
-    const result =  await apiCall.get('/api/get-csrf-token',{ headers: {"Authorization" : `Bearer ${"tokenStr"}`} } )
-    console.log(result)
+    // const result =  await apiCall.get('/api/get-csrf-token',{ headers: {"Authorization" : `Bearer ${"tokenStr"}`} } )
+    // console.log(result)
   }
   
   return (

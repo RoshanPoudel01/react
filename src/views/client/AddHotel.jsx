@@ -16,22 +16,29 @@ import toast, { Toaster } from "react-hot-toast";
 import slugify from "react-slugify";
 import apiCall from "../../helper/Axios";
 import TextInput from "../../component/TextInput";
+import SelectOpt from "../../component/Select";
 import { useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 const AddHotelSchema = Yup.object().shape({});
 
 const AddHotel = () => {
+  const [opt, setOpt] = useState([])
   useEffect(() => {
     getFeatures();
   }, []);
 
   const getFeatures = async () => {
     const features = await apiCall.get("feature/get-feature");
-    // console.log(features?.data?.response.map((feature) => feature.id));
-    console.log(features?.data?.response.map((feature) => feature.name));
+   const dataOption= features?.data?.response.map((data) => {
+      return{label:data?.name[0],value:data?._id}
+   })
+    // console.log(dataOption)
+    setOpt(dataOption)
+    // console.log(features?.data?.response.map((feature) => feature._id));
+  
 
-    console.log(features?.data?.response);
+    // console.log(features?.data?.response);
   };
   const [bannerImage, SetBannerImage] = useState(null);
 
@@ -91,6 +98,10 @@ const AddHotel = () => {
           <TextInput name="phone" control={control} label="Phone Number" />
           <TextInput name="address" control={control} label="Address" />
           <TextInput name="price" control={control} label="Price Per Day" />
+          {  console.log(opt)
+}
+          {opt?.length > 0 &&
+            <SelectOpt name="features" options={opt || []} isMulti control={control} label="Features" />}
         </SimpleGrid>
         <SimpleGrid columns={1}>
           <TextInput

@@ -5,21 +5,34 @@ import App from "../App";
 import Login from "../views/auth/Login";
 import Signup from "../views/auth/Signup";
 import Admin from "../views/auth/Admin";
+import ChangePassword from "../views/auth/ChangePassword";
 import Booking from "../views/Booking/Booking_form";
+import Profile from "../views/auth/Profile";
 import Success from "../views/Booking/Success";
 import { ClientDashboard } from "../views/client/ClientDashboard";
 import SidebarWithHeader from "../layout";
 import RequireAuth from "../layout/RequireAuth";
 import AddHotel from "../views/client/AddHotel";
+import {BookingList} from "../views/client/BookingList";
+import { HotelList } from "../views/client/HotelList";
+import NormalUserNav from "../layout/normalUserHeader";
+import MainComponent from "../views/MainComponent";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: (
+   
+      <NormalUserNav>
+                 <MainComponent/>
+</NormalUserNav>
+        ),
   },
   {
+    
     path: "/details",
-    element: <Detailspage />,
+    element: ( <RequireAuth role="Normal User">
+      <NormalUserNav><Detailspage /></NormalUserNav> </RequireAuth>),
   },
   {
     path: "/login",
@@ -61,6 +74,43 @@ export const router = createBrowserRouter([
       </RequireAuth>
     ),
   },
+  {
+    path: "/hotel-list",
+    element: (
+      <RequireAuth role="Client">
+        <SidebarWithHeader>
+      <HotelList/>
+        </SidebarWithHeader>
+      </RequireAuth>
+    ),
+  },
+  {
+    path: "/hotel-bookings",
+    element: (
+      <RequireAuth role="Client">
+        <SidebarWithHeader>
+          <BookingList />
+        </SidebarWithHeader>
+      </RequireAuth>
+    ),
+  },
+  
+  {
+    path: "/profile",
+    element: (
+     <RequireAuth role="Client">
+        <Profile />
+      </RequireAuth>
+    )
+  },
+  {
+    path: "/change-password",
+    element: (
+     <RequireAuth role="Client">
+        <ChangePassword />
+      </RequireAuth>
+    )
+  }
 
   
 ]);

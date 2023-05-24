@@ -31,15 +31,19 @@ import {
   FiMenu,
   FiBell,
   FiChevronDown,
+  FiPlus,
+  FiEye,
+  FiList,
+  FiBookOpen,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { ReactText } from "react";
 
 const LinkItems = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
-  { name: "Explore", icon: FiCompass },
-  { name: "Favourites", icon: FiStar },
+  { name: "DashBoard", icon: FiBookOpen },
+  { name: "Add Hotel", icon: FiPlus },
+  { name: "My Hotels", icon: FiList },
+  { name: "Bookings", icon: FiEye },
   { name: "Settings", icon: FiSettings },
 ];
 
@@ -209,9 +213,8 @@ const MobileNav = ({ onOpen, ...rest }) => {
             >
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
               <MenuDivider />
-              <MenuItem>Sign out</MenuItem>
+              <MenuItem>Log Out</MenuItem>
             </MenuList>
           </Menu>
         </Flex>
