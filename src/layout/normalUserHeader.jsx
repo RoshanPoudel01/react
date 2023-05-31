@@ -19,12 +19,19 @@ import {
 // import { HamburgerIcon, CloseIcon, AddIcon } from '@chakra-ui/icons';
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdCloseCircle } from "react-icons/io";
-import {  GrLogout } from "react-icons/gr";
+import { GrLogin, GrLogout } from "react-icons/gr";
+import { NavURL } from '../helper/Navlink';
+import apiCall from "../helper/Axios";
+import { useNavigate } from 'react-router';
 
 
-const Links = ['Home','Profile', 'Bookings'];
+const Links = [
+  { name: "Home", url: NavURL?.Dashboard },
+  { name: "Profile", url: NavURL?.profile },
+  { name: "Bookings", url: NavURL?.bookinghistory },
+]
 
-const NavLink = ({ children  }) => (
+const NavLink = ({ children, url }) => (
   <Link
     px={2}
     py={1}
@@ -33,23 +40,33 @@ const NavLink = ({ children  }) => (
       textDecoration: 'none',
       bg: useColorModeValue('gray.200', 'gray.700'),
     }}
-    href={'#'}>
+    href={url ? url : "#"}>
     {children}
   </Link>
 );
 
-const logout = () => {
-  localStorage.removeItem('usertoken');
-  localStorage.removeItem('userrole');
 
-}
-
-export default function NormalUserNav({children}) {
+export default function NormalUserNav({ children }) {
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const logout = async () => {
+    // api call logout 
+    const logout = await apiCall.get("auth/logout")
+    localStorage.removeItem('usertoken');
+    localStorage.removeItem('userrole');
+    // navigate
+    navigate('/login')
+
+
+  }
+  const login = () => {
+    navigate('/login')
+
+  }
 
   return (
     <>
-      <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
+      <Box bg="whiteblue.background" color="whiteblue.color" px={10} borderRadius={15} m={4} position={"sticky"}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <IconButton
             size={'md'}
@@ -59,26 +76,39 @@ export default function NormalUserNav({children}) {
             onClick={isOpen ? onClose : onOpen}
           />
           <HStack spacing={8} alignItems={'center'}>
-         
+
             <HStack
               as={'nav'}
               spacing={4}
               display={{ base: 'none', md: 'flex' }}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {Links.map((link, index) => (
+                <NavLink key={index} url={link?.url && link?.url}>{link?.name}</NavLink>
               ))}
             </HStack>
           </HStack>
           <Flex alignItems={'center'}>
-            <Button
-              variant={'solid'}
-              onClick={logout}
-              colorScheme={'teal'}
-              size={'sm'}
-              mr={4}
-              leftIcon={< GrLogout />}>
-              Logout
-            </Button>
+            {localStorage.usertoken &&
+              <Button
+                variant={'solid'}
+                onClick={logout}
+                colorScheme={'teal'}
+                size={'sm'}
+                mr={4}
+                leftIcon={< GrLogout />}>
+                Logout
+              </Button>
+            }
+            {!localStorage.usertoken &&
+              <Button
+                variant={'solid'}
+                onClick={login}
+                colorScheme={'teal'}
+                size={'sm'}
+                mr={4}
+                leftIcon={< GrLogin />}>
+                Login
+              </Button>
+            }
             {/* <Menu>
               <MenuButton
                 as={Button}
@@ -106,15 +136,16 @@ export default function NormalUserNav({children}) {
         {isOpen ? (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
+              {Links.map((link, index) => (
+                <NavLink key={index} url={link?.url && link?.url}>{link?.name}</NavLink>
+
               ))}
             </Stack>
           </Box>
         ) : null}
       </Box>
 
-          <Box p={4}>{children }</Box>
+      <Box p={4} height={"100%"}>{children}</Box>
     </>
   );
 }

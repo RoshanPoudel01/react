@@ -1,0 +1,26 @@
+export const NavURL = {
+    Dashboard: "/",
+    AddHotel: "/add-hotel",
+    login: "/login",
+    profile: "/profile",
+    signup: "/signup",
+    admin: "/admin",
+    booking: "/booking",
+    success: "/success",
+    clientdashboard: "/client-dashboard",
+    hotellist: "/hotel-list",
+    seeownedhotelbookings: "/hotel-bookings",
+    changepassword: "/change-password",
+    hoteldetails: "/details",
+    bookinghistory: "/bookinghistory",
+    upcomingbookings: "/upcomingbookings",
+    paymentlog: "/paymentslog",
+    allbookings:"/allbookings",
+    allpayments:"/allpayments",
+    allusers: "/allusers",
+    allhotels: "/allhotels",
+    edithotel:"/changehoteldetails",
+    BecomeClient: "/become-client",
+    spinner:"/stripe-callback"
+    
+}

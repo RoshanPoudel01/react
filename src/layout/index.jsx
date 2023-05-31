@@ -38,12 +38,13 @@ import {
 } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { ReactText } from "react";
+import { NavURL } from "../helper/Navlink";
 
 const LinkItems = [
-  { name: "DashBoard", icon: FiBookOpen },
-  { name: "Add Hotel", icon: FiPlus },
-  { name: "My Hotels", icon: FiList },
-  { name: "Bookings", icon: FiEye },
+  { name: "DashBoard", icon: FiBookOpen, url: NavURL?.clientdashboard },
+  { name: "Add Hotel", icon: FiPlus, url: NavURL?.AddHotel },
+  { name: "My Hotels", icon: FiList, url: NavURL?.hotellist },
+  { name: "Bookings", icon: FiEye, url: NavURL?.seeownedhotelbookings },
   { name: "Settings", icon: FiSettings },
 ];
 
@@ -96,7 +97,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} url={link?.url}>
           {link.name}
         </NavItem>
       ))}
@@ -104,10 +105,10 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, url, children, ...rest }) => {
   return (
     <Link
-      href="#"
+      href={url}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >

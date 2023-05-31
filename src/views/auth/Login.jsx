@@ -39,6 +39,7 @@ export default function Signin() {
   const tokenchecker = async () => {
     const token = await localStorage.getItem("usertoken");
     const userrole = await localStorage.getItem("userrole");
+    // console.log(userrole)
     if (token && userrole) {
       navigateUser(userrole);
     }
@@ -57,16 +58,17 @@ export default function Signin() {
       const result = await apiCall.post("auth/login", {
         ...data,
       });
-      console.log(result);
+      // console.log(result);
       if (result?.status === 200) {
         toast.success(result?.data?.message);
-        console.log(result?.data?.token);
+        // console.log(result)
+        // console.log(result?.data?.response?.role);
         await localStorage.setItem("usertoken", result?.data?.token);
-        await localStorage.setItem("userrole", result?.data?.response?.role);
-        // console.log(Response.role);
+        await localStorage.setItem("userrole", JSON.stringify(result?.data?.response?.role));
+        // console.log(result?.data?.response?.role);
         navigateUser(result?.data?.response?.role);
       }
-      console.log(data);
+
       // toast.error(re);
     } catch (e) {
       console.log(e?.response?.data?.message);
@@ -78,6 +80,8 @@ export default function Signin() {
     console.log(data);
     if (data === "Admin") {
       navigate(`/admin`);
+    } else if (data === "Client") {
+      navigate(`/client-dashboard`);
     } else {
       navigate(`/`);
     }
@@ -128,6 +132,9 @@ export default function Signin() {
               </Stack>
             </form>
           </Stack>
+          <Text px={2} mx={2}>Don't have an account?   <Link _hover={{
+            bg: "blue.300",
+          }} href="/signup">    SignUp</Link></Text>
         </Box>
       </Stack>
     </Flex>

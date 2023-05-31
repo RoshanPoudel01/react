@@ -114,6 +114,9 @@ export default function Signup() {
               </Stack>
             </form>
           </Stack>
+           <Text px={2} mx={2}>Already have an account?   <Link _hover={{
+                    bg: "blue.300",
+                  }} href="/login">    Login</Link></Text> 
         </Box>
       </Stack>
     </Flex>

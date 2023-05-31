@@ -10,7 +10,7 @@ const Success = () => {
   }, []);
   const checkStatus = async () => {
     const result = await apiCall.get(
-      "booking/payment-status/?id=644fd5d1cab8856b09a08ff5"
+      `booking/payment-status/?id=${id}`
     );
     console.log(result);
   };

@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
 import {
-  Box,
-  FormControl,
-  FormLabel,
-  Input,
   Button,
-  Heading,
-  Select,
   Card,
   SimpleGrid,
 } from "@chakra-ui/react";
 import DropzoneComponent from "../../component/Dropzone";
-import SelectComponent from "../../component/Select";
-import toast, { Toaster } from "react-hot-toast";
+
 import slugify from "react-slugify";
 import apiCall from "../../helper/Axios";
 import TextInput from "../../component/TextInput";

@@ -10,18 +10,19 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { router } from './helper/Router';
-const { Button,Heading,Input,Text,FormControl,FormLabel,FormErrorMessage} = chakraTheme.components
+import { theme } from './theme';
+const { Button,Heading,Input,Text,FormControl,FormLabel,FormErrorMessage,Table,TableContainer} = chakraTheme.components
 
-const theme = extendBaseTheme({
-  components: {
-    Button,
-    Heading,
-    Input,
-    Text, FormControl, FormLabel
-    , FormErrorMessage
+// const theme = extendBaseTheme({
+//   components: {
+//     Button,
+//     Heading,
+//     Input,
+//     Text, FormControl, FormLabel
+//     , FormErrorMessage,Table,TableContainer
     
-  },
-})
+//   },
+// })
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

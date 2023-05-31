@@ -36,7 +36,9 @@ const handleDetails=(id)=>{
             <CardBody>
               <Image
                 src={x.bannerimage}
-                alt='Green double couch with wooden legs'
+                alt='{x.name}'
+                height={200}
+                width={300}
                 borderRadius='lg'
                 fallbackSrc='https://res.cloudinary.com/dnjy9jxbk/image/upload/v1683388418/Ramesh%20Dai%20Ko%20Hotel.png'
               />

@@ -17,11 +17,13 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import * as Yup from "yup";
 import TextInput from "../../component/TextInput";
 import apiCall from "../../helper/Axios";
 import { loadStripe } from "@stripe/stripe-js";
+import { useState } from "react";
 
 const BookingValidations = Yup.object().shape({
   check_in_date: Yup.string().required("Check In Date is Required"),
@@ -41,10 +43,11 @@ export default function Booking({id}) {
 
   const submitForm = async (data) => {
     try {
+      console.log(data)
       const result = await apiCall.post("booking/book-hotel", {
         ...data,hotel_id:id,
       });
-      console.log(result?.data?.response?.session);
+      // console.log(result?.data?.response?.session);
       const stripe = await loadStripe(`${process.env.REACT_APP_PUBLIC_KEY}`);
       stripe.redirectToCheckout({ sessionId: result?.data?.response?.session });
       //   if (result?.status === 200) {
@@ -68,7 +71,8 @@ export default function Booking({id}) {
       toast.error(e?.response?.data?.message);
     }
   };
-
+const [check_in_date, setStartDate] = useState(new Date());
+const [check_out_date, setEndDate] = useState(new Date());
   return (
     <Flex
     
@@ -93,11 +97,19 @@ export default function Booking({id}) {
               <FormControl id="check_in_date" isRequired>
                 <FormLabel>Check In Date</FormLabel>
                 <TextInput name="check_in_date" control={control} />
-              </FormControl>
-              <FormControl id="check_out_date" isRequired>
+                </FormControl>
+                <FormControl id="check_out_date" isRequired>
                 <FormLabel>Check Out Date</FormLabel>
                 <TextInput name="check_out_date" control={control} />
               </FormControl>
+              {/* <FormControl id="check_in_date" isRequired>
+                <FormLabel>Check In Date</FormLabel>
+                 <DatePicker  selected={check_in_date} minDate={check_in_date} onChange={(date) => setStartDate(date)} />
+              </FormControl>
+                <FormControl id="check_out_date" isRequired>
+                <FormLabel>Check Out Date</FormLabel>
+                 <DatePicker  selected={check_out_date} minDate={check_in_date} onChange={(date) => setEndDate(date)} />
+                </FormControl> */}
              
               <Stack spacing={10}>
                 <Button
