@@ -54,14 +54,14 @@ export default function DropzoneComponent({
         setAcceptedFiles(acceptedFiles);
         setRejectedFileList(rejectedFiles);
 
-        acceptedFiles.forEach(file => {
+        acceptedFiles.forEach((file) => {
           const filePreview = {
             link: URL.createObjectURL(file),
             fileType: file.type,
             fileName: file.name,
           };
           multiple
-            ? setPreview(prev => [...prev, filePreview])
+            ? setPreview((prev) => [...prev, filePreview])
             : setPreview([filePreview]);
         });
       }}
@@ -88,7 +88,7 @@ export default function DropzoneComponent({
                     ""
                   ) : (
                     <CloseButton
-                      onClick={e => {
+                      onClick={(e) => {
                         e.stopPropagation();
                         setPreview([]);
                         setAcceptedFiles([]);
@@ -136,7 +136,7 @@ export default function DropzoneComponent({
               leftIcon={<AiOutlineCloseCircle width={3} height={3} />}
               colorScheme="purple"
               variant="ghost"
-              onClick={e => {
+              onClick={(e) => {
                 e.stopPropagation();
                 setPreview([]);
                 setRejectedFileList([]);
@@ -164,9 +164,9 @@ export default function DropzoneComponent({
                         : rejectedItem.errors[0].message}
                     </Text>
                     <CloseButton
-                      onClick={e => {
+                      onClick={(e) => {
                         e.stopPropagation();
-                        setRejectedFileList(prev => {
+                        setRejectedFileList((prev) => {
                           return prev.filter((each, i) => i !== index);
                         });
                       }}

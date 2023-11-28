@@ -22,6 +22,7 @@ export const AllBookings = () => {
 
     const allBookings = async () => {
         const bookings = await apiCall.get("admin/allbookings")
+        // console.log(bookings)
         sethotelbookings(bookings?.data?.response?.Bookings)
         // console.log(bookings?.data?.response?.Bookings)
     }

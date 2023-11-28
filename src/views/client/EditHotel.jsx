@@ -21,34 +21,10 @@ export const EditHotel = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
-    const id = searchParams.get("product_id")
+    const id = searchParams.get("hotel_id")
     // console.log(id)
     const [hotel, setHotel] = useState("")
-    useEffect(() => {
-        getFeatures();
-        if (id) {
-            getHotelDetails()
-        }
-        reset(hotel)
-    }, [reset, id]);
-    const getHotelDetails = async () => {
-
-        const result = await apiCall.get(`hotel/hotel-details?id=${id}`);
-        // console.log(result?.data?.response?.name)
-        //check hotel response
-        setHotel(result?.data?.response)
-    }
-    const getFeatures = async () => {
-        const features = await apiCall.get("feature/get-feature");
-        const dataOption = features?.data?.response.map((data) => {
-            return { label: data?.name[0], value: data?._id }
-        })
-
-        // console.log(dataOption)
-        setOpt(dataOption)
-        // console.log(features?.data?.response.map((feature) => feature._id));
-    };
-    const [bannerImage, SetBannerImage] = useState(null);
+    const [features, setFeatures] = useState("")
 
     const { control, reset, handleSubmit } = useForm({
         resolver: yupResolver(AddHotelSchema),
@@ -59,8 +35,52 @@ export const EditHotel = () => {
             address: "",
             price: "",
             description: "",
+            features: ""
         },
     });
+
+    useEffect(() => {
+        getFeatures();
+        if (id) {
+            getHotelDetails()
+        }
+
+    }, []);
+    useEffect(() => {
+
+        reset({
+            name: hotel?.name,
+            email: hotel?.email,
+            phone: hotel?.phone,
+            address: hotel?.address,
+            price: hotel?.price,
+            description: hotel?.description,
+            features: features
+
+        })
+    }, [hotel])
+
+    const getHotelDetails = async () => {
+
+        const result = await apiCall.get(`hotel/hotel-details?id=${id}`);
+        console.log(result?.data?.response?.feature?.map((feature) => feature.name))
+        //check hotel response
+        setHotel(result?.data?.response)
+        setFeatures(result?.data?.response?.feature?.map((feature) => feature.name))
+    }
+
+    const getFeatures = async () => {
+        const features = await apiCall.get("feature/get-feature");
+        const dataOption = features?.data?.response.map((data) => {
+            return { label: data?.name[0], value: data?._id }
+        })
+        // console.log(dataOption)
+        setOpt(dataOption)
+        // console.log(features?.data?.response.map((feature) => feature._id));
+    };
+    const [bannerImage, SetBannerImage] = useState(null);
+
+
 
     const handleDelete = async () => {
         if (window.confirm("Are you sure you want to delete the hotel?")) {
@@ -128,7 +148,7 @@ export const EditHotel = () => {
                     helperText="Please Upload XLSX Files"
                     title="myt imagffe"
                 />
-                <Button mt={4} onSubmit={handleSubmit} colorScheme="teal" type="submit">
+                <Button mt={4} colorScheme="teal" type="submit">
                     Update Hotel
                 </Button>
             </form>

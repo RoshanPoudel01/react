@@ -52,7 +52,7 @@ export default function Simple() {
 
  const [searchParams, setSearchParams] = useSearchParams();
 
-  const id = searchParams.get("product_id")
+  const id = searchParams.get("hotel_id")
   console.log(id)
   useEffect(() => {
   if (id) {

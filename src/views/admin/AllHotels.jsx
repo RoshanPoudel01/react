@@ -27,7 +27,7 @@ export const AllHotels = () => {
     return (
         <TableContainer>
             <Table variant='simple'>
-                <TableCaption>All Users</TableCaption>
+                <TableCaption>All Hotels</TableCaption>
                 <Thead>
                     <Tr>
                         <Th>S.N</Th>
@@ -52,7 +52,7 @@ export const AllHotels = () => {
                                     src={x.bannerimage}
                                     alt='{x.name}'
                                     height={200}
-                                    width={200}
+                                    width={250}
                                     borderRadius='lg'
                                     fallbackSrc='https://res.cloudinary.com/dnjy9jxbk/image/upload/v1683388418/Ramesh%20Dai%20Ko%20Hotel.png'
                                 /></Td>

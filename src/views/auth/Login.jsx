@@ -116,7 +116,7 @@ export default function Signin() {
 
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <TextInput name="password" control={control} />
+                <TextInput name="password" type={"password"} control={control} />
               </FormControl>
               <Stack spacing={10}>
                 <Button

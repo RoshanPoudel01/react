@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import Nav from "../views/Nav";
+
 import Detailspage from "../views/HotelDetails/index";
 import App from "../App";
 import Login from "../views/auth/Login";
@@ -21,6 +21,7 @@ import { HotelList } from "../views/client/HotelList";
 import { EditHotel } from "../views/client/EditHotel";
 import NormalUserNav from "../layout/normalUserHeader";
 import AdminSidebar from "../layout/admin";
+import Footer from "../layout/footer";
 import AuthNav from "../layout/authpage";
 import MainComponent from "../views/MainComponent";
 import { NavURL } from "./Navlink";
@@ -37,7 +38,8 @@ export const router = createBrowserRouter([
     element: (
    
       <NormalUserNav>
-                 <MainComponent/>
+        <MainComponent />
+        <Footer/>
 </NormalUserNav>
         ),
   },
@@ -55,28 +57,34 @@ export const router = createBrowserRouter([
     path: NavURL?.signup,
     element: (<AuthNav><Signup /></AuthNav>),
   },
-  {
-    path: NavURL?.admin,
-    element: <Admin />,
+ {
+    path:NavURL?.admin,
+    element: (
+      <RequireAuth role={["Admin"]}>
+        <AdminSidebar>
+          <Admin />
+        </AdminSidebar>
+      </RequireAuth>
+    ),
   },
   {
     path: NavURL?.allbookings,
-    element: (<AdminSidebar><AllBookings /></AdminSidebar>),
+    element: (<RequireAuth role={["Admin"]}><AdminSidebar><AllBookings /></AdminSidebar></RequireAuth>),
   },
   {
     path: NavURL?.allpayments,
-    element: (<AdminSidebar><AllPayments /></AdminSidebar>),
+    element: (<RequireAuth role={["Admin"]}><AdminSidebar><AllPayments /></AdminSidebar></RequireAuth>),
   },
   {
     path: NavURL?.allusers,
-    element: (<AdminSidebar><AllUsers /></AdminSidebar>),
+    element: (<RequireAuth role={["Admin"]}><AdminSidebar><AllUsers /></AdminSidebar></RequireAuth>),
   },{
     path: NavURL?.allhotels,
-    element: (<AdminSidebar><AllHotels /></AdminSidebar>),
+    element: (<RequireAuth role={["Admin"]}><AdminSidebar><AllHotels /></AdminSidebar></RequireAuth>),
   },
   {
     path: NavURL?.booking,
-    element: <Booking />,
+    element: (<RequireAuth role={["Normal User"]}><Booking /></RequireAuth>),
   },
   {
     path:  NavURL?.success,
@@ -175,20 +183,20 @@ export const router = createBrowserRouter([
   {
     
     path: NavURL?.bookinghistory,
-    element: ( <RequireAuth role="Normal User">
+    element: ( <RequireAuth role={["Normal User"]}>
       <NormalUserNav><BookingHistory /></NormalUserNav> </RequireAuth>),
   },
   {
     
     path: NavURL?.upcomingbookings,
-    element: ( <RequireAuth role="Normal User">
+    element: ( <RequireAuth role={["Normal User"]}>
       <NormalUserNav><UpcomingBookings /></NormalUserNav>
     </RequireAuth>),
   },
   {
     
     path: NavURL?.paymentlog,
-    element: ( <RequireAuth role="Normal User">
+    element: ( <RequireAuth role={["Normal User"]}>
       <NormalUserNav><GetPaymentLog /></NormalUserNav> </RequireAuth>),
   },
 

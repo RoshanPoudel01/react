@@ -98,7 +98,7 @@ export default function Signup() {
 
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <TextInput name="password" control={control} />
+                <TextInput name="password" type={"password"} control={control} />
               </FormControl>
               <Stack spacing={10}>
                 <Button
@@ -114,9 +114,9 @@ export default function Signup() {
               </Stack>
             </form>
           </Stack>
-           <Text px={2} mx={2}>Already have an account?   <Link _hover={{
-                    bg: "blue.300",
-                  }} href="/login">    Login</Link></Text> 
+          <Text px={2} mx={2}>Already have an account?   <Link _hover={{
+            bg: "blue.300",
+          }} href="/login">    Login</Link></Text>
         </Box>
       </Stack>
     </Flex>

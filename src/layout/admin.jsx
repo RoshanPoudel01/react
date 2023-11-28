@@ -44,7 +44,7 @@ import { ReactText } from "react";
 import { NavURL } from "../helper/Navlink";
 
 const LinkItems = [
-    { name: "DashBoard", icon: FiBookOpen },
+    { name: "DashBoard", icon: FiBookOpen, url: NavURL?.admin },
     { name: "Hotels", icon: FiHome, url: NavURL?.allhotels },
     { name: "Bookings", icon: FiBook, url: NavURL?.allbookings },
     { name: "Users", icon: FiUser, url: NavURL?.allusers },

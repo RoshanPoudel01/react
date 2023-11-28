@@ -1,23 +1,8 @@
+import "./App.css";
+import { useEffect } from "react";
+import apiCall from "./helper/Axios";
+import MainComponent from "./views/MainComponent";
 
-import './App.css';
-import { useEffect } from 'react';
-import apiCall from "./helper/Axios"
-import MainComponent from './views/MainComponent';
-import Nav from './views/Nav';
-
-
-function App() {
- 
-  const func=async()=>{
-    console.log("Hekko")
-
-    // const result =  await apiCall.get('/api/get-csrf-token',{ headers: {"Authorization" : `Bearer ${"tokenStr"}`} } )
-    // console.log(result)
-  }
-  
-  return (
-      <Nav/>
-  );
-}
+function App() {}
 
 export default App;
